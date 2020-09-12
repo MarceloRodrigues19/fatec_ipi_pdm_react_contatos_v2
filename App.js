@@ -1,70 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
-import { bold } from 'ansi-colors';
+import { StyleSheet, View, FlatList } from 'react-native';
+import ContatoInput from './components/ContatoInput';
+import ContatoItem from './components/ContatoItem';
 
 export default function App() {
 
-  const [nome, setNome] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [cadastros, setCadastros] = useState([]);
-  const [contador, setContador] = useState(10);
+  
+  const [contatos, setContatos] = useState([]);
+  const [count, setCount] = useState(10);
 
-  const capturarNome = (nome) => {
-    setNome(nome);
-  }
+  
 
-  const capturaTelefone = (telefone) => {
-    setTelefone(telefone);
-  }
-
-  const adicionarCadastro = () => {
-    let cadastro = { nome: nome, telefone: telefone };
-    setCadastros(cadastros => {
-      setContador(contador + 2);
-      return [ { key: contador.toString(), value: cadastro },...cadastros];
+  const addContato = (nome, telephone) => {
+    let contato = { nome: nome, telephone: telephone };
+    setContatos(contatos => {
+      setCount(count + 2);
+      return [ { key: count.toString(), value: contato },...contatos];
       
+    });
+  }
+
+  const removeContatos = (keyToBeRemove) => {
+    setContatos(contatos => {
+      return contatos.filter((contato) => {
+        return contato.key !== keyToBeRemove;
+      });
     });
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputArea}>
-        <Text style={styles.title}>Dados Cadastrais</Text>
+      <ContatoInput
+        addContato={addContato}
+      />
 
-        <TextInput
-          placeholder="Nome"
-          style={styles.Input}
-          onChangeText={capturarNome}
-          value={nome}
-        />
-
-        <TextInput
-          placeholder="Telefone"
-          style={styles.Input}
-          onChangeText={capturaTelefone}
-          value={telefone}
-        />
-
-        <Button 
-          style={styles.submitButton}
-          title="Cadastrar"
-          onPress={adicionarCadastro}
-        />
-      </View>
-
-      <View style={styles.listArea}>
-        <FlatList
-          data={cadastros}
-          renderItem={
-            cadastro =>
-            <View key={cadastro.item.value.key} style={styles.itemList}>
-              <Text style={styles.itemHeader}>Nome: {cadastro.item.value.nome}</Text>
-              <Text style={styles.itemBody}>Telefone: {cadastro.item.value.telefone}</Text>
-            </View>
-          }
-        />
-      </View>
+      <FlatList
+        data={contatos}
+        renderItem={
+          (contato) =>
+          <ContatoItem
+            key={contato.item.value.key}
+            nome={contato.item.value.nome}
+            telephone={contato.item.value.telephone}
+            onDelete={removeContatos}
+          />
+        }
+      />
 
     </View>
   );
@@ -74,15 +55,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0f0f7',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     fontWeight: "bold",
     color: '#32264d',
     fontSize: 20,
     lineHeight: 30,
-    marginBottom: 30,
+    paddingTop: 50
   },
   Input:{
     height: 54,
