@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fatec_ipi_noite_pdm_react_cadastro",
-    "slug": "fatec_ipi_noite_pdm_react_cadastro",
+    "name": "fatec-ipi-noite-pdm-react-cadastro-contatos",
+    "slug": "fatec-ipi-noite-pdm-react-cadastro-contatos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
