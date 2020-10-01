@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { HeaderButton } from 'react-navigation-header-buttons';
 import {Ionicons} from '@expo/vector-icons';
-import cores from '../constantes/cores';
+import cores from '../constantes/Cores';
 
 const BotaoCabecalho = (props) => {
     return (
@@ -10,7 +10,7 @@ const BotaoCabecalho = (props) => {
             {...props}
             IconComponent={Ionicons}
             iconSize={23}
-            color={Platform.OS === 'android' ? 'black' : cores.primary}
+            color={Platform.OS === 'android' ? 'black' : Cores.primary}
         />
     )
 }
